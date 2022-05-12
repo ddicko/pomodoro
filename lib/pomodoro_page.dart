@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,21 @@ class _PomodoroState extends State<Pomodoro> {
   int _seconds = 0;
   int _minutes = 25;
 
+  var f = NumberFormat("00");
+
+  void _stopTimer() {
+    if (_timer != null) {
+      _timer!.cancel();
+      _seconds = 0;
+      _minutes = 25;
+    }
+  }
+
   _startTimer() {
-    // _timer!.cancel();
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+
     if (_minutes > 0) {
       _seconds = _minutes * 60;
     }
@@ -112,17 +126,12 @@ class _PomodoroState extends State<Pomodoro> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 28.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _startTimer();
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            "Start Studying",
-                            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 12.0),
-                          ),
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _stopButton(),
+                          _startButton(),
+                        ],
                       ),
                     )
                   ],
@@ -131,6 +140,46 @@ class _PomodoroState extends State<Pomodoro> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  ElevatedButton _startButton() {
+    return ElevatedButton(
+      onPressed: () {
+        if (_minutes == 25 && _seconds == 0) {
+          _startTimer();
+        } else {
+          debugPrint("Hello solo, counter is in progress ...!");
+        }
+      },
+      child: const Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Text(
+          "Start Studying",
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  ElevatedButton _stopButton() {
+    return ElevatedButton(
+      onPressed: () {
+        if (_minutes != 25 && _seconds != 0) {
+          setState(() {
+            _stopTimer();
+          });
+        } else {
+          debugPrint("Hello solo, you break is in progress ...!");
+        }
+      },
+      child: const Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Text(
+          "break",
+          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
@@ -147,7 +196,7 @@ class _PomodoroState extends State<Pomodoro> {
         lineWidth: 10.0,
         progressColor: Colors.white,
         center: Text(
-          "$_minutes : $_seconds",
+          "${f.format(_minutes)} : ${f.format(_seconds)}",
           style: const TextStyle(color: Color.fromARGB(213, 9, 9, 9), fontSize: 40.0),
         ),
       ),

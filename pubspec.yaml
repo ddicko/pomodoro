@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   percent_indicator: ^4.0.1
   hidden_drawer_menu: ^3.0.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
