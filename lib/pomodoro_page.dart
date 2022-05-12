@@ -70,7 +70,7 @@ class _PomodoroState extends State<Pomodoro> {
         children: <Widget>[
           _displayingTime(),
           const SizedBox(
-            height: 10.0,
+            height: 70.0,
           ),
           Expanded(
             child: Container(
