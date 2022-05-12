@@ -129,8 +129,8 @@ class _PomodoroState extends State<Pomodoro> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _stopButton(),
-                          _startButton(),
+                          _startOrstopButton(_minutes, _seconds, "Stop"),
+                          _startOrstopButton(_minutes, _seconds, "Start"),
                         ],
                       ),
                     )
@@ -144,41 +144,26 @@ class _PomodoroState extends State<Pomodoro> {
     );
   }
 
-  ElevatedButton _startButton() {
+  ElevatedButton _startOrstopButton(int _minutes, int _seconds, String text) {
     return ElevatedButton(
       onPressed: () {
         if (_minutes == 25 && _seconds == 0) {
           _startTimer();
-        } else {
-          debugPrint("Hello solo, counter is in progress ...!");
         }
-      },
-      child: const Padding(
-        padding: EdgeInsets.all(15.0),
-        child: Text(
-          "Start Studying",
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-
-  ElevatedButton _stopButton() {
-    return ElevatedButton(
-      onPressed: () {
         if (_minutes != 25 && _seconds != 0) {
           setState(() {
             _stopTimer();
           });
         } else {
-          debugPrint("Hello solo, you break is in progress ...!");
+          debugPrint("Hello solo, he is in progress ...!");
         }
       },
-      child: const Padding(
-        padding: EdgeInsets.all(15.0),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
         child: Text(
-          "break",
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
+          text,
+          style:
+              const TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
         ),
       ),
     );
