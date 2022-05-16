@@ -11,6 +11,16 @@ class Pomodoro extends StatefulWidget {
 }
 
 class _PomodoroState extends State<Pomodoro> {
+  Color bgcLightTop = const Color(0xffD7DFE4);
+  Color bgcDarkTop = const Color(0xff62696E);
+  Color bgcLightBottom = const Color(0xff7A7886);
+  Color bgcDarkBottom = const Color(0xff2A1D29);
+
+  bool inProgress = false;
+
+  Color textcLight = const Color(0xff2A1D29);
+  Color textcDark = const Color(0xff2A1D29);
+
   Timer? _timer;
   int _seconds = 0;
   int _minutes = 25;
@@ -52,6 +62,12 @@ class _PomodoroState extends State<Pomodoro> {
         }
       });
     });
+    if (_minutes != 0 && _seconds != 0) {
+      setState(() {
+        _stopTimer();
+        inProgress = false;
+      });
+    }
   }
 
   @override
@@ -65,80 +81,17 @@ class _PomodoroState extends State<Pomodoro> {
       ),
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           _displayingTime(),
           const SizedBox(
+            height: 20.0,
+          ),
+          _startOrstopButton(_minutes, _seconds, "Start"),
+          const SizedBox(
             height: 70.0,
           ),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.black26,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(30.0), topLeft: Radius.circular(30.0)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-                        Expanded(
-                          child: Column(
-                            children: const <Widget>[
-                              Text(
-                                "Study Time",
-                                style: TextStyle(fontSize: 20.0, color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 20.0,
-                              ),
-                              Text(
-                                "25",
-                                style: TextStyle(fontSize: 50.0, color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 80,
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: const <Widget>[
-                              Text(
-                                "Pause Time",
-                                style: TextStyle(fontSize: 20.0, color: Colors.white),
-                              ),
-                              SizedBox(
-                                height: 20.0,
-                              ),
-                              Text(
-                                "25",
-                                style: TextStyle(fontSize: 50.0, color: Colors.white),
-                              )
-                            ],
-                          ),
-                        ),
-                      ]),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 28.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _startOrstopButton(_minutes, _seconds, "Stop"),
-                          _startOrstopButton(_minutes, _seconds, "Start"),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -147,12 +100,16 @@ class _PomodoroState extends State<Pomodoro> {
   ElevatedButton _startOrstopButton(int _minutes, int _seconds, String text) {
     return ElevatedButton(
       onPressed: () {
-        if (_minutes == 25 && _seconds == 0) {
+        if (_minutes > 0) {
           _startTimer();
+          setState(() {
+            inProgress = true;
+          });
         }
-        if (_minutes != 25 && _seconds != 0) {
+        if (_minutes != 0 && _seconds != 0) {
           setState(() {
             _stopTimer();
+            inProgress = false;
           });
         } else {
           debugPrint("Hello solo, he is in progress ...!");
@@ -161,7 +118,7 @@ class _PomodoroState extends State<Pomodoro> {
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Text(
-          text,
+          inProgress ? "stop" : text,
           style:
               const TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
         ),
@@ -171,20 +128,49 @@ class _PomodoroState extends State<Pomodoro> {
 
   Widget _displayingTime() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: CircularPercentIndicator(
-        circularStrokeCap: CircularStrokeCap.round,
-        percent: 0.1,
-        animation: true,
-        animateFromLastPercent: true,
-        radius: 80.0,
-        lineWidth: 10.0,
-        progressColor: Colors.white,
-        center: Text(
-          "${f.format(_minutes)} : ${f.format(_seconds)}",
-          style: const TextStyle(color: Color.fromARGB(213, 9, 9, 9), fontSize: 40.0),
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _plusOrMoinsIcon(icon: const Icon(Icons.minimize_outlined), isPlus: false),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: CircularPercentIndicator(
+              circularStrokeCap: CircularStrokeCap.round,
+              percent: 0.1,
+              animation: true,
+              animateFromLastPercent: true,
+              radius: 80.0,
+              lineWidth: 15.0,
+              progressColor: const Color(0xFFB8C7CB),
+              center: Text(
+                "${f.format(_minutes)} : ${f.format(_seconds)}",
+                style: const TextStyle(color: Color.fromARGB(213, 9, 9, 9), fontSize: 40.0),
+              ),
+            ),
+          ),
+          _plusOrMoinsIcon(icon: const Icon(Icons.add), isPlus: true)
+        ],
       ),
+    );
+  }
+
+  IconButton _plusOrMoinsIcon({required Icon icon, required bool isPlus}) {
+    return IconButton(
+      onPressed: () {
+        if (isPlus) {
+          setState(() {
+            _minutes++;
+          });
+        } else {
+          setState(() {
+            if (_minutes > 0) {
+              _minutes--;
+            }
+          });
+        }
+      },
+      icon: icon,
     );
   }
 }
