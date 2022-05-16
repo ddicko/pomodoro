@@ -60,9 +60,17 @@ class _PomodoroState extends State<Pomodoro> {
             _timer!.cancel();
           }
         }
+        if (_minutes == 0 && _seconds == 0) {
+          _timer!.cancel();
+          _seconds = 0;
+          _minutes = 25;
+          inProgress = false;
+          const snackBar = SnackBar(content: Text("vous meritez bien une pause !"));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       });
     });
-    if (_minutes != 0 && _seconds != 0) {
+    if (_timer?.isActive == false) {
       setState(() {
         _stopTimer();
         inProgress = false;
