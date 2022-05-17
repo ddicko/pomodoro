@@ -126,7 +126,7 @@ class _PomodoroState extends State<Pomodoro> {
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Text(
-          inProgress ? "stop" : text,
+          inProgress ? "Reset" : text,
           style:
               const TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
         ),
