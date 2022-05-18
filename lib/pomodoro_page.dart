@@ -65,7 +65,8 @@ class _PomodoroState extends State<Pomodoro> {
           _seconds = 0;
           _minutes = 25;
           inProgress = false;
-          const snackBar = SnackBar(content: Text("vous meritez bien une pause !"));
+          const snackBar =
+              SnackBar(content: Text("vous meritez bien une pause !"));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       });
@@ -127,8 +128,10 @@ class _PomodoroState extends State<Pomodoro> {
         padding: const EdgeInsets.all(15.0),
         child: Text(
           inProgress ? "Reset" : text,
-          style:
-              const TextStyle(color: Color.fromARGB(255, 255, 255, 255), fontSize: 14.0, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -140,7 +143,8 @@ class _PomodoroState extends State<Pomodoro> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _plusOrMoinsIcon(icon: const Icon(Icons.minimize_outlined), isPlus: false),
+          _plusOrMoinsIcon(
+              icon: const Icon(Icons.minimize_outlined), isPlus: false),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: CircularPercentIndicator(
@@ -153,7 +157,10 @@ class _PomodoroState extends State<Pomodoro> {
               progressColor: const Color(0xFFB8C7CB),
               center: Text(
                 "${f.format(_minutes)} : ${f.format(_seconds)}",
-                style: const TextStyle(color: Color.fromARGB(213, 9, 9, 9), fontSize: 40.0),
+                style: const TextStyle(
+                    color: Color.fromARGB(213, 9, 9, 9),
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.w300),
               ),
             ),
           ),

@@ -24,19 +24,29 @@ class _MyAppState extends State<MyApp> {
   // late bool isFirstTime;
   bool? isFirstTime;
 
-  _MyAppState() {
-    MySharedPreferences.instance.getBooleanValue("firstTimeOpen").then((value) => setState(() {
-          debugPrint("======>>firstTime = $isFirstTime ----- value = $value");
-          isFirstTime = value;
-        }));
+  @override
+  void initState() {
+    super.initState();
+    checking();
   }
 
   checking() async {
     var prefs = await SharedPreferences.getInstance();
     var boolKey = 'isFirstTime';
-    isFirstTime = prefs.getBool(boolKey) ?? true;
+    isFirstTime = prefs.getBool(boolKey);
     debugPrint("======<<>>:isFirstTime:$isFirstTime");
-    return isFirstTime;
+    if (isFirstTime == null) {
+      setState(() {
+        isFirstTime = true;
+      });
+      return isFirstTime;
+    } else {
+      setState(() {
+        isFirstTime = false;
+      });
+      return isFirstTime;
+    }
+    // return isFirstTime;
   }
 
   List<PageViewModel> getPages() {
@@ -80,9 +90,15 @@ class _MyAppState extends State<MyApp> {
                     "Done",
                     style: TextStyle(color: Colors.black),
                   ),
-                  onDone: () {
-                    //TODO: navigate to HiddenDrawer widget.
+                  onDone: () async {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const HiddenDrawer()));
+                    var prefs = await SharedPreferences.getInstance();
+                    var boolKey = 'isFirstTime';
+                    prefs.setBool(boolKey, false);
+                    debugPrint("======<<second>>:isFirstTime:$isFirstTime");
+                    setState(() {
+                      isFirstTime = false;
+                    });
                   },
                   showNextButton: false,
                 )
@@ -90,21 +106,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-}
-
-class MySharedPreferences {
-  MySharedPreferences._privateConstructor();
-
-  static final MySharedPreferences instance = MySharedPreferences._privateConstructor();
-
-  setBooleanValue(String key, bool value) async {
-    SharedPreferences myPrefs = await SharedPreferences.getInstance();
-    myPrefs.setBool(key, value);
-  }
-
-  Future<bool> getBooleanValue(String key) async {
-    SharedPreferences myPrefs = await SharedPreferences.getInstance();
-    return myPrefs.getBool(key) ?? false;
   }
 }
