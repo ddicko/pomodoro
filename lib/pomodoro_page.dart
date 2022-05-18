@@ -83,8 +83,8 @@ class _PomodoroState extends State<Pomodoro> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xff1542bf), Color(0xff51a8ff)],
-          begin: FractionalOffset(0.5, 1),
+          colors: [Color(0xff62696E), Color(0xff62696E)],
+          begin: FractionalOffset(0.6, 0.3),
         ),
       ),
       width: double.infinity,
@@ -94,11 +94,11 @@ class _PomodoroState extends State<Pomodoro> {
         children: <Widget>[
           _displayingTime(),
           const SizedBox(
-            height: 20.0,
+            height: 100.0,
           ),
           _startOrstopButton(_minutes, _seconds, "Start"),
           const SizedBox(
-            height: 70.0,
+            height: 20.0,
           ),
         ],
       ),
