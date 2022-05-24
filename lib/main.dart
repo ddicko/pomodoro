@@ -16,8 +16,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final pageDecoration = PageDecoration(
-    titleTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
-    bodyTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
+    titleTextStyle:
+        const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
+    bodyTextStyle:
+        const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
     contentMargin: const EdgeInsets.all(10),
     // pageColor: Colors.red,
   );
@@ -91,7 +93,7 @@ class _MyAppState extends State<MyApp> {
                     style: TextStyle(color: Colors.black),
                   ),
                   onDone: () async {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HiddenDrawer()));
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => const HiddenDrawer()));
                     var prefs = await SharedPreferences.getInstance();
                     var boolKey = 'isFirstTime';
                     prefs.setBool(boolKey, false);
@@ -99,6 +101,7 @@ class _MyAppState extends State<MyApp> {
                     setState(() {
                       isFirstTime = false;
                     });
+                    debugPrint("------<<third>>:isFirstTime:$isFirstTime");
                   },
                   showNextButton: false,
                 )

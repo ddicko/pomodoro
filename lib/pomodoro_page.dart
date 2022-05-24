@@ -93,6 +93,15 @@ class _PomodoroState extends State<Pomodoro> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          //TODO: add text for motivation
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text(
+                "Les distractions sont un des pires destructeurs de reves."),
+          ),
+          const SizedBox(
+            height: 50.0,
+          ),
           _displayingTime(),
           const SizedBox(
             height: 100.0,
