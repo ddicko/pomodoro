@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timer/hidden_drawer.dart';
 
@@ -16,10 +17,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final pageDecoration = PageDecoration(
-    titleTextStyle:
-        const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
-    bodyTextStyle:
-        const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
+    titleTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
+    bodyTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
     contentMargin: const EdgeInsets.all(10),
     // pageColor: Colors.red,
   );
@@ -54,8 +53,8 @@ class _MyAppState extends State<MyApp> {
   List<PageViewModel> getPages() {
     return [
       PageViewModel(
-          image: Image.asset("assets/images/online_Ad.png"),
-          title: "Online Ads",
+          image: Lottie.asset("assets/images/timer.json"),
+          title: "Pomodoro Technique",
           body: "This is an online ad.",
           footer: const Text(
             "MTECHVIRAL",
@@ -84,6 +83,9 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Builder(
         builder: (context) => Scaffold(
+          // appBar: AppBar(
+          //   leading: const Icon(Icons.anchor_outlined),
+          // ),
           body: isFirstTime ?? true
               ? IntroductionScreen(
                   globalBackgroundColor: Colors.white,
