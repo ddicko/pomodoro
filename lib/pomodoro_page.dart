@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
@@ -65,8 +66,7 @@ class _PomodoroState extends State<Pomodoro> {
           _seconds = 0;
           _minutes = 25;
           inProgress = false;
-          const snackBar = SnackBar(content: Text("vous meritez bien une pause !"));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          flushbar();
         }
       });
     });
@@ -76,6 +76,45 @@ class _PomodoroState extends State<Pomodoro> {
         inProgress = false;
       });
     }
+  }
+
+  Flushbar flushbar() {
+    return Flushbar(
+      title: "Hey Ninja",
+      titleColor: Colors.white,
+      message: "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.FLOATING,
+      reverseAnimationCurve: Curves.decelerate,
+      forwardAnimationCurve: Curves.elasticOut,
+      backgroundColor: Colors.red,
+      boxShadows: const [BoxShadow(color: Color.fromARGB(255, 16, 80, 2), offset: Offset(0.0, 2.0), blurRadius: 3.0)],
+      backgroundGradient: const LinearGradient(colors: [Colors.blueGrey, Colors.black]),
+      isDismissible: false,
+      duration: const Duration(minutes: 5),
+      icon: const Icon(
+        Icons.check,
+        color: Colors.greenAccent,
+      ),
+      mainButton: FlatButton(
+        onPressed: () {},
+        child: const Text(
+          "Start",
+          style: TextStyle(color: Colors.amber),
+        ),
+      ),
+      showProgressIndicator: true,
+      progressIndicatorBackgroundColor: Colors.red,
+      titleText: Text(
+        "Hello Hero",
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.yellow[600], fontFamily: "ShadowsIntoLightTwo"),
+      ),
+      messageText: const Text(
+        "You killed that giant monster in the city. Congratulations!",
+        style: TextStyle(fontSize: 18.0, color: Colors.green, fontFamily: "ShadowsIntoLightTwo"),
+      ),
+    )..show(context);
   }
 
   @override

@@ -18,7 +18,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final pageDecoration = PageDecoration(
     titleTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
-    bodyTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
+    bodyTextStyle: const PageDecoration()
+        .titleTextStyle
+        .copyWith(color: Colors.black, fontSize: 14.0, fontStyle: FontStyle.values.last),
     contentMargin: const EdgeInsets.all(10),
     // pageColor: Colors.red,
   );
@@ -55,18 +57,20 @@ class _MyAppState extends State<MyApp> {
       PageViewModel(
           image: Lottie.asset("assets/images/timer.json"),
           title: "Pomodoro Technique",
-          body: "This is an online ad.",
+          body:
+              "La technique Pomodoro est une technique de gestion du temps développée par Francesco Cirillo1 à la fin des années 1980.",
           footer: const Text(
-            "MTECHVIRAL",
+            "SOKA",
             style: TextStyle(color: Colors.black),
           ),
           decoration: pageDecoration),
       PageViewModel(
-          image: Image.asset("assets/images/online_Ad.png"),
-          title: "Online Ads",
-          body: "This is an online ad.",
+          image: Image.asset("assets/images/soka.jpg"),
+          title: "Productivity",
+          body:
+              "Cette méthode se base sur l'usage d'un minuteur permettant de respecter des périodes de 25 minutes appelées pomodori ",
           footer: const Text(
-            "MTECHVIRAL",
+            "SOKA",
             style: TextStyle(color: Colors.black),
           ),
           decoration: pageDecoration),
