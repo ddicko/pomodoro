@@ -51,7 +51,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
     return HiddenDrawerMenu(
       actionsAppBar: [
         IconButton(
-          icon: const Icon(Icons.more_vert_sharp),
+          icon: const Icon(Icons.person),
           onPressed: () {
             showDialog(
                 context: context,

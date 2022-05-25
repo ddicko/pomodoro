@@ -93,17 +93,25 @@ class _PomodoroState extends State<Pomodoro> {
       isDismissible: false,
       duration: const Duration(minutes: 5),
       icon: const Icon(
-        Icons.check,
+        Icons.timer,
         color: Colors.greenAccent,
       ),
-      mainButton: FlatButton(
-        onPressed: () {},
+      blockBackgroundInteraction: true,
+      mainButton: ElevatedButton(
+        onPressed: () {
+          Navigator.pop(context);
+          _startTimer();
+          setState(() {
+            inProgress = true;
+          });
+        },
         child: const Text(
-          "Start",
+          "Let's go",
           style: TextStyle(color: Colors.amber),
         ),
       ),
       showProgressIndicator: true,
+      onStatusChanged: statusChanged,
       progressIndicatorBackgroundColor: Colors.red,
       titleText: Text(
         "Hello Hero",
@@ -111,10 +119,35 @@ class _PomodoroState extends State<Pomodoro> {
             fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.yellow[600], fontFamily: "ShadowsIntoLightTwo"),
       ),
       messageText: const Text(
-        "You killed that giant monster in the city. Congratulations!",
+        "Il y aura toujours des choses a faire, alors faites une pause de 5 min!",
         style: TextStyle(fontSize: 18.0, color: Colors.green, fontFamily: "ShadowsIntoLightTwo"),
       ),
     )..show(context);
+  }
+
+  statusChanged(FlushbarStatus? status) {
+    switch (status!) {
+      case FlushbarStatus.SHOWING:
+        {
+          debugPrint("=====>> he is showing object");
+          break;
+        }
+      case FlushbarStatus.IS_APPEARING:
+        {
+          debugPrint("=====>> he is appp object");
+          break;
+        }
+      case FlushbarStatus.IS_HIDING:
+        {
+          debugPrint("=====>> he is isHiding object");
+          break;
+        }
+      case FlushbarStatus.DISMISSED:
+        {
+          debugPrint("=====>> he is dismissed object");
+          break;
+        }
+    }
   }
 
   @override
@@ -122,7 +155,7 @@ class _PomodoroState extends State<Pomodoro> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xff62696E), Color(0xff62696E)],
+          colors: [Color.fromARGB(255, 166, 177, 184), Color(0xff62696E)],
           begin: FractionalOffset(0.6, 0.3),
         ),
       ),
@@ -133,8 +166,11 @@ class _PomodoroState extends State<Pomodoro> {
         children: <Widget>[
           //TODO: add text for motivation
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
-            child: Text("Les distractions sont un des pires destructeurs de reves."),
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: Text(
+              "Les distractions sont un des pires destructeurs de reves.",
+              style: TextStyle(fontSize: 14),
+            ),
           ),
           const SizedBox(
             height: 50.0,
@@ -192,8 +228,9 @@ class _PomodoroState extends State<Pomodoro> {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: CircularPercentIndicator(
               circularStrokeCap: CircularStrokeCap.round,
-              percent: 0.1,
+              percent: 0.2,
               animation: true,
+              animationDuration: 200000,
               animateFromLastPercent: true,
               radius: 80.0,
               lineWidth: 15.0,

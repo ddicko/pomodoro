@@ -17,10 +17,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final pageDecoration = PageDecoration(
-    titleTextStyle: const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
-    bodyTextStyle: const PageDecoration()
-        .titleTextStyle
-        .copyWith(color: Colors.black, fontSize: 14.0, fontStyle: FontStyle.values.last),
+    titleTextStyle:
+        const PageDecoration().titleTextStyle.copyWith(color: Colors.black),
+    bodyTextStyle: const PageDecoration().titleTextStyle.copyWith(
+        color: Colors.black, fontSize: 14.0, fontStyle: FontStyle.values.last),
     contentMargin: const EdgeInsets.all(10),
     // pageColor: Colors.red,
   );
@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
           // appBar: AppBar(
           //   leading: const Icon(Icons.anchor_outlined),
           // ),
-          body: isFirstTime ?? true
+          body: isFirstTime ?? false
               ? IntroductionScreen(
                   globalBackgroundColor: Colors.white,
                   pages: getPages(),
