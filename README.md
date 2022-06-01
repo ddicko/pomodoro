@@ -1,4 +1,5 @@
 # timer
+![](https://gitwar.herokuapp.com/badge?username=ddicko)
 
 A new Flutter project.
 
