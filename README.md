@@ -1,7 +1,7 @@
 # timer
 ![](https://gitwar.herokuapp.com/badge?username=ddicko)
 
-![Profile views](https://gpvc.arturio.dev/[ddicko])
+![Profile views](https://gpvc.arturio.dev/ddicko)
 
 A new Flutter project.
 
